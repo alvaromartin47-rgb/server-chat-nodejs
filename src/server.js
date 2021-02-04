@@ -4,6 +4,8 @@ import cors from 'cors';
 import { graphqlHTTP } from 'express-graphql';
 import SocketIO from 'socket.io';
 import bot from './bot';
+import userConnection from './models/userConnection';
+import chatId from './models/chatId';
 
 // HTTP
 
@@ -37,16 +39,47 @@ const io = SocketIO(server, {
 });
 
 io.on('connection', socket => {
-    console.log('socket connected:', socket.id);
-
-    socket.on('message', (newMessage) => {
-        console.log("received from client: ", newMessage);
-        bot.telegram.sendMessage(855202158, newMessage);
+    socket.on('auth', (nameUser) => {
+        let i = 0
+        chatId.find().exec((err, data) => {
+            if (data.length == 0) {
+                const newChatId = new chatId({idChat: 0})
+                newChatId.save();
+            }
+            else {
+                const current = data[0].idChat;
+                chatId.update({idChat: current}, {$inc: {idChat: current + 1}});
+                i = current + 1;
+            }
+        });
+        userConnection.find({username: nameUser}).exec((err, data) => {
+            const newUserConnection = new userConnection({
+                socketId: socket.id,
+                name: nameUser,
+                idChat: i
+            });
+            newUserConnection.save();
+        });
     });
 
-    bot.on('text', (ctx) => {
-        console.log(ctx)
-        socket.emit('message', ctx.update.message.text);
+    socket.on('message', async (user) => {
+        await userConnection.find({socketId: socket.id}).exec((err, data) => {
+            const idChat = data[0].idChat;
+            const msj = "From: " + data[0].name + "\n" + "ID: @" + idChat + "\n" + "Message: " + user.text;
+            bot.telegram.sendMessage(855202158, msj);
+        });
+    });
+
+    bot.on('text', async (ctx) => {
+        const msj = ctx.update.message.text;
+        let i = 0;
+        for (i; msj[i] != ":"; i++);
+        const idChat = msj.slice(1, i);
+
+        await userConnection.find({idChat}).exec((err, data) => {
+            const socketId = data[0].socketId;
+            io.to(socketId).emit('message', msj.slice(i + 2));
+        });
     });
 });
 

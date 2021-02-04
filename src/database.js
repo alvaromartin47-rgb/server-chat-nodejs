@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const DB_NAME = "";
+const DB_NAME = "connections";
 
 mongoose.connect('mongodb://localhost/' + (DB_NAME), {
     useCreateIndex: true,

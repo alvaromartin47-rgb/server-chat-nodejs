@@ -1,4 +1,4 @@
-// import './database';
+import './database';
 import server from './server';
 import bot from './bot';
 
