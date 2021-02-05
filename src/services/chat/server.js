@@ -1,7 +1,6 @@
 import express from 'express';
 import http from 'http';
-import cors from 'cors';
-import { graphqlHTTP } from 'express-graphql';
+// import { graphqlHTTP } from 'express-graphql';
 import SocketIO from 'socket.io';
 import bot from './bot';
 import userConnection from './models/userConnection';
@@ -16,15 +15,14 @@ import {
 
 } from './functions';
 
-env("/home/alvaro/Escritorio/server-chat/.env");
+env("/home/alvaro/Escritorio/server-chat/src/services/chat/.env");
 
 // HTTP
 
 const app = express();
-app.use(cors);
 const server = http.createServer(app);
 
-const schema = {};
+// const schema = {};
 
 // app.get("/", (req, res) => {
 //     res.json({
@@ -34,10 +32,10 @@ const schema = {};
 
 // app.use(express.static("/home/alvaro/Escritorio/fronted-react/build"));
 
-app.use("/graphql", graphqlHTTP({
-    graphiql: true,
-    schema: schema
-}));
+// app.use("/graphql", graphqlHTTP({
+//     graphiql: true,
+//     schema: schema
+// }));
 
 // Websocket
 
