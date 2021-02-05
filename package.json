@@ -19,6 +19,7 @@
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.2",
     "mongoose": "^5.11.14",
+    "node-env-file": "^0.1.8",
     "rimraf": "^3.0.2",
     "socket.io": "^3.1.0",
     "telegraf": "^4.0.2"

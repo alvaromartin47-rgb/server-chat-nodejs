@@ -1,6 +1,8 @@
 import { Telegraf } from 'telegraf';
+import env from 'node-env-file';
+env("/home/alvaro/Escritorio/server-chat/.env");
 
-const TOKEN = "";
+const TOKEN = process.env.TOKEN;
 
 const bot = new Telegraf(TOKEN);
 
