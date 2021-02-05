@@ -5,6 +5,7 @@ import { graphqlHTTP } from 'express-graphql';
 import SocketIO from 'socket.io';
 import bot from './bot';
 import userConnection from './models/userConnection';
+import env from 'node-env-file';
 
 import { 
 
@@ -14,6 +15,8 @@ import {
     validarRespuestaTelegram
 
 } from './functions';
+
+env("/home/alvaro/Escritorio/server-chat/.env");
 
 // HTTP
 
@@ -60,7 +63,7 @@ io.on('connection', socket => {
         
     socket.on('message', (user) => {
         const msj = "From: " + name + "\n" + "ID: @" + idChat + "\n" + "Message: " + user.text;
-        bot.telegram.sendMessage(855202158, msj);
+        bot.telegram.sendMessage(process.env.CHAT_ID_ADMIN, msj);
     });
 
     socket.on('disconnect', async () => {
@@ -74,7 +77,7 @@ io.on('connection', socket => {
             const responseFind = await userConnection.find({idChat});
             io.to(responseFind[0].socketId).emit('message', msjChat);
 
-        } catch (error) { bot.telegram.sendMessage(855202158, error) }
+        } catch (error) { bot.telegram.sendMessage(process.env.CHAT_ID_ADMIN, error) }
     });
 });
 
