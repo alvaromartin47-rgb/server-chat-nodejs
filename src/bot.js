@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf';
 
-const TOKEN = "1490131900:AAFOenQzt_ZeHSN0N_Zv2BmLbWPXsFQIZxM";
+const TOKEN = "";
 
 const bot = new Telegraf(TOKEN);
 
