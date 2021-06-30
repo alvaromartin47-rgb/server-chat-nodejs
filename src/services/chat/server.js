@@ -15,7 +15,7 @@ import {
 
 } from './functions';
 
-env("/home/alvaro/Escritorio/server-chat/src/services/chat/.env");
+env("/home/alvaro/pr/web/chat-nodejs/server-chat-nodejs/.env");
 
 // HTTP
 

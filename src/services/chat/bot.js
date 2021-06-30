@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf';
 import env from 'node-env-file';
-env("/home/alvaro/Escritorio/server-chat/src/services/chat/.env");
+env("/home/alvaro/pr/web/chat-nodejs/server-chat-nodejs/.env");
 
 const TOKEN = process.env.TOKEN;
 
