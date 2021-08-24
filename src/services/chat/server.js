@@ -1,10 +1,8 @@
 import express from 'express';
 import http from 'http';
-// import { graphqlHTTP } from 'express-graphql';
 import SocketIO from 'socket.io';
 import bot from './bot';
 import userConnection from './models/userConnection';
-import env from 'node-env-file';
 
 import { 
 
@@ -15,27 +13,10 @@ import {
 
 } from './functions';
 
-env("/home/alvaro/pr/web/chat-nodejs/server-chat-nodejs/.env");
-
 // HTTP
 
 const app = express();
 const server = http.createServer(app);
-
-// const schema = {};
-
-// app.get("/", (req, res) => {
-//     res.json({
-//         message:"hola"
-//     })
-// });
-
-// app.use(express.static("/home/alvaro/Escritorio/fronted-react/build"));
-
-// app.use("/graphql", graphqlHTTP({
-//     graphiql: true,
-//     schema: schema
-// }));
 
 // Websocket
 
